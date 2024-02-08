@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import List from './List.jsx'
 import ListItem from './ListItem.jsx'
 import SearchView from './SearchView.jsx'
 import AddMovieView from './AddMovieView.jsx'
 import ToggleWatchedView from './ToggleWatchedView.jsx'
-
 
 //remove "current",
 //prop name should be the same.
@@ -19,7 +18,7 @@ const App = (props) => {
     { title: 'Sunshine' },
     { title: 'Ex Machina' },
   ];
-  for(let movie of movies){
+  for (let movie of movies) {
     movie.watched = false;
     movie.visible = true;
   }
@@ -36,20 +35,26 @@ const App = (props) => {
     setAddMovieTerm(event.target.value)
   }
 
+  var handleWatchPress = ({singleMovie, index}) => {
+    console.log(`${singleMovie.title} stored on index ${index}`);
+    return;
+  }
+
   var handleInsertMoviePress = (event) => {
-    if(addMovieTerm === ""){
+    if (addMovieTerm === "") {
       alert("Movie name cannot be blank")
       return;
-   }
+    }
 
-  if(movieList.length === 0){
-    setMovieList([{title: addMovieTerm, watched: false, visible: true}])
+    if (movieList.length === 0) {
+      setMovieList([{ title: addMovieTerm, watched: false, visible: true }])
     } else {
-    let updatedVisability = [...movieList];
-      for(let item of updatedVisability){
+      let updatedVisability = [...movieList];
+      for (let item of updatedVisability) {
         item.visible = true;
       }
-      setMovieList([...updatedVisability, {title: addMovieTerm, watched: false, visible: true}]) //Standard way of actually doing it
+      //Standard way of actually doing it
+      setMovieList([...updatedVisability, { title: addMovieTerm, watched: false, visible: true }])
     }
 
 
@@ -61,14 +66,14 @@ const App = (props) => {
   var handleSubmitPress = () => {
 
     let updatedList = [...movieList];
-    if(searchTerm === ''){
-      for(let movie of updatedList){
+    if (searchTerm === '') {
+      for (let movie of updatedList) {
         movie.visible = true
       }
     } else {
-      for(let movie of updatedList){
+      for (let movie of updatedList) {
         console.log(movie)
-        if(movie.title.toUpperCase().includes(searchTerm.toUpperCase())){
+        if (movie.title.toUpperCase().includes(searchTerm.toUpperCase())) {
           movie.visible = true
         } else {
           movie.visible = false;
@@ -83,16 +88,15 @@ const App = (props) => {
   }
 
   return (
-  //Give search the prop for currentSearch?
-  //Full movie list passed for init render.
-  <div>
-    <AddMovieView addMovieTerm = {addMovieTerm} handleListTextChange = {handleListTextChange} handleInsertMoviePress = {handleInsertMoviePress}/>
-    <SearchView searchTerm = {searchTerm} handleSearchTextChange = {handleSearchTextChange} onSubmitPress = {handleSubmitPress}/>
-    <ToggleWatchedView/>
-    <List movieList = {movieList}/>
-
-  </div>
-)
+    //Give search the prop for currentSearch?
+    //Full movie list passed for init render.
+    <div>
+      <AddMovieView addMovieTerm={addMovieTerm} handleListTextChange={handleListTextChange} handleInsertMoviePress={handleInsertMoviePress} />
+      <SearchView searchTerm={searchTerm} handleSearchTextChange={handleSearchTextChange} onSubmitPress={handleSubmitPress} />
+      <ToggleWatchedView />
+      <List movieList={movieList} handleWatchPress={handleWatchPress} />
+    </div>
+  )
 };
 
 export default App;
