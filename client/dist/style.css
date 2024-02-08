@@ -10,3 +10,7 @@ li {
   padding: 50px;
   margin-top: -5px;
 }
+h3 {
+  display: flex;
+  justify-content: space-between;
+}
