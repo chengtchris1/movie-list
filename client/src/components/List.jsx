@@ -12,23 +12,23 @@ const List = (props) => {
     <div>
       <ul>
         {
-
-        props.movieList.map((singleMovie, index)=>{
-          let temp = singleMovie
-          temp.id = index
-          return temp
+          //First map is to create ID keys so that the later filters wont mess up the tracking between watched/not watched.
+          props.movieList.map((singleMovie, index) => {
+            let temp = singleMovie
+            temp.id = index
+            return temp
           }).filter(
-          (singleMovie) => singleMovie.visible
+            (singleMovie) => singleMovie.visible
           ).filter(
-            (singleMovie)=>{
-          if(props.showOnlyWatched){
-            return singleMovie.watched;
-          } else {
-            return !singleMovie.watched;
-          }
-        }).map(
-          (singleMovie) => (<ListItem singleMovie={singleMovie} key={singleMovie.id} index={singleMovie.id} handleWatchPress={props.handleWatchPress} />)
-        )
+            (singleMovie) => {
+              if (props.showOnlyWatched) {
+                return singleMovie.watched;
+              } else {
+                return !singleMovie.watched;
+              }
+            }).map(
+              (singleMovie) => (<ListItem singleMovie={singleMovie} key={singleMovie.id} index={singleMovie.id} handleWatchPress={props.handleWatchPress} />)
+            )
         }
       </ul>
     </div>

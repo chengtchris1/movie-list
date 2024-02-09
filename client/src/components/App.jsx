@@ -23,7 +23,7 @@ const App = (props) => {
     movie.visible = true;
   }
 
-  let [movieList, setMovieList] = useState(movies);
+  let [movieList, setMovieList] = useState([]);
   let [searchTerm, setSearchTerm] = useState('');
   let [addMovieTerm, setAddMovieTerm] = useState('The ROOM');
 
@@ -46,11 +46,11 @@ const App = (props) => {
     setAddMovieTerm(event.target.value)
   }
 
-  var handleWatchPress = ({singleMovie, index}, event) => {
+  var handleWatchPress = ({ singleMovie, index }, event) => {
     console.log(event.target)
     const updatedListing = movieList.map((item, i) => {
       //Tell List.JX to change button text.
-      if(index === i){
+      if (index === i) {
         var updatedStatus = item;
         item.watched = !item.watched;
         return updatedStatus;
@@ -74,6 +74,7 @@ const App = (props) => {
       alert("Movie name cannot be blank")
       return;
     }
+    setShowOnlyWatched(false);
 
     if (movieList.length === 0) {
       setMovieList([{ title: addMovieTerm, watched: false, visible: true }])
@@ -122,8 +123,8 @@ const App = (props) => {
     <div>
       <AddMovieView addMovieTerm={addMovieTerm} handleListTextChange={handleListTextChange} handleInsertMoviePress={handleInsertMoviePress} />
       <SearchView searchTerm={searchTerm} handleSearchTextChange={handleSearchTextChange} onSubmitPress={handleSubmitPress} />
-      <ToggleWatchedView showOnlyWatched={showOnlyWatched} handleWatchViewSwitch={handleWatchViewSwitch}/>
-      <List movieList={movieList} handleWatchPress={handleWatchPress} showOnlyWatched={showOnlyWatched}/>
+      <ToggleWatchedView showOnlyWatched={showOnlyWatched} handleWatchViewSwitch={handleWatchViewSwitch} />
+      <List movieList={movieList} handleWatchPress={handleWatchPress} showOnlyWatched={showOnlyWatched} />
     </div>
   )
 };
