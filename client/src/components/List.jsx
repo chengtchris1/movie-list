@@ -11,8 +11,23 @@ const List = (props) => {
   return (
     <div>
       <ul>
-        {props.movieList.filter(singleMovie => singleMovie.visible).map(
-          (singleMovie, key) => (<ListItem singleMovie={singleMovie} key={key} index={key} handleWatchPress={props.handleWatchPress} />)
+        {
+
+        props.movieList.map((singleMovie, index)=>{
+          let temp = singleMovie
+          temp.id = index
+          return temp
+          }).filter(
+          (singleMovie) => singleMovie.visible
+          ).filter(
+            (singleMovie)=>{
+          if(props.showOnlyWatched){
+            return singleMovie.watched;
+          } else {
+            return !singleMovie.watched;
+          }
+        }).map(
+          (singleMovie) => (<ListItem singleMovie={singleMovie} key={singleMovie.id} index={singleMovie.id} handleWatchPress={props.handleWatchPress} />)
         )
         }
       </ul>

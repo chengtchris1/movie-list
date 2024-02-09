@@ -23,9 +23,16 @@ const App = (props) => {
     movie.visible = true;
   }
 
-  let [movieList, setMovieList] = useState([]);
+  let [movieList, setMovieList] = useState(movies);
   let [searchTerm, setSearchTerm] = useState('');
   let [addMovieTerm, setAddMovieTerm] = useState('The ROOM');
+
+
+  let [showOnlyWatched, setShowOnlyWatched] = useState(false);
+
+  /*
+  Adding the watched/toWatchToggle
+  */
 
   var handleSearchTextChange = (event) => {
     setSearchTerm(event.target.value);
@@ -35,9 +42,31 @@ const App = (props) => {
     setAddMovieTerm(event.target.value)
   }
 
-  var handleWatchPress = ({singleMovie, index}) => {
-    console.log(`${singleMovie.title} stored on index ${index}`);
+  var handleToggleWatchedPressed = (event) => {
+    setAddMovieTerm(event.target.value)
+  }
+
+  var handleWatchPress = ({singleMovie, index}, event) => {
+    console.log(event.target)
+    const updatedListing = movieList.map((item, i) => {
+      //Tell List.JX to change button text.
+      if(index === i){
+        var updatedStatus = item;
+        item.watched = !item.watched;
+        return updatedStatus;
+      } else {
+        return item;
+      }
+
+    })
+    console.log(updatedListing);
+    setMovieList(updatedListing);
+    console.log(`${singleMovie.title} stored on index ${index}, with watched set to ${singleMovie.watched}`);
     return;
+  }
+
+  var handleWatchViewSwitch = () => {
+    setShowOnlyWatched(!showOnlyWatched)
   }
 
   var handleInsertMoviePress = (event) => {
@@ -93,8 +122,8 @@ const App = (props) => {
     <div>
       <AddMovieView addMovieTerm={addMovieTerm} handleListTextChange={handleListTextChange} handleInsertMoviePress={handleInsertMoviePress} />
       <SearchView searchTerm={searchTerm} handleSearchTextChange={handleSearchTextChange} onSubmitPress={handleSubmitPress} />
-      <ToggleWatchedView />
-      <List movieList={movieList} handleWatchPress={handleWatchPress} />
+      <ToggleWatchedView showOnlyWatched={showOnlyWatched} handleWatchViewSwitch={handleWatchViewSwitch}/>
+      <List movieList={movieList} handleWatchPress={handleWatchPress} showOnlyWatched={showOnlyWatched}/>
     </div>
   )
 };
