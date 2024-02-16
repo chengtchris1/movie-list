@@ -46,7 +46,7 @@ const App = (props) => {
     setAddMovieTerm(event.target.value)
   }
 
-  var handleWatchPress = ({ singleMovie, index }, event) => {
+  var handleWatchPress = ({singleMovie,index}, event) => {
     console.log(event.target)
     const updatedListing = movieList.map((item, i) => {
       //Tell List.JX to change button text.
@@ -86,15 +86,12 @@ const App = (props) => {
       //Standard way of actually doing it
       setMovieList([...updatedVisability, { title: addMovieTerm, watched: false, visible: true }])
     }
-
-
     setSearchTerm("");
   }
 
 
   //Event not needed because child not passing any info
   var handleSubmitPress = () => {
-
     let updatedList = [...movieList];
     if (searchTerm === '') {
       for (let movie of updatedList) {
@@ -113,8 +110,6 @@ const App = (props) => {
     console.log(movieList);
     console.log(updatedList);
     setMovieList([...updatedList]);
-
-
   }
 
   return (
