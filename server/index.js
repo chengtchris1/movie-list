@@ -2,11 +2,9 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan')
 const PORT = 3000 || process.env.PORT;
-
-
-
 app.use('/',express.static('client/dist'));
 app.use(morgan('dev'));
+app.use(express.json());
 
 /*
 app.get('/access', (req, res) => {
